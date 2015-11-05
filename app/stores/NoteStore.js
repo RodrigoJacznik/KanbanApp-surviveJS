@@ -7,6 +7,10 @@ class NoteStore {
         this.bindActions(NoteActions)
 
         this.notes = []
+
+        this.exportPublicMethods({
+            get: this.get.bind(this)
+        })
     }
 
     create(note) {
@@ -52,6 +56,11 @@ class NoteStore {
         this.setState({
             notes: notes.slice(0, noteIndex).concat(notes.slice(noteIndex + 1))
         })
+    }
+
+    get(ids = []) {
+        return ids.map((id) => this.notes[this.findNote(id)])
+                  .filter((note) => note)
     }
 }
 
